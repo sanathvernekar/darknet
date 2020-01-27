@@ -17,7 +17,8 @@ import shutil
 def download_pre_requisites():
     if not os.path.exists("weights"):
         os.mkdir("weights")
-    if os.path.exists(os.path.join("weights","darknet53.conv.74")):
+    os.chdir("weights")
+    if os.path.exists("darknet53.conv.74"):
         print("darknet53.conv.74 , exists ..... skipping download.:)")
     else :
         os.chdir("weights")
@@ -25,7 +26,14 @@ def download_pre_requisites():
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
         output, error = process.communicate()
         print(output)
-        os.chdir("../")
+    if os.path.exists("yolov3-tiny.weights"):
+        print("yolov3-tiny.weights , exists ..... skipping download.:)")
+    else :
+        bashCommand = "wget https://pjreddie.com/media/files/yolov3-tiny.weights"
+        process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+        output, error = process.communicate()
+        print(output)
+    os.chdir("../")
         
 def test_train(totalcount, imgpath ,labelpath):
     test_percentage=30 # should be set based on your dataset size 
